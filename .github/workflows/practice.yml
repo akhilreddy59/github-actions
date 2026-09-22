@@ -3,3 +3,8 @@ name: Learning GitHub Actions
 on: push
 
 jobs:
+  my-first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print a message
+        run: echo "I am learning GitHub Actions from scratch!"

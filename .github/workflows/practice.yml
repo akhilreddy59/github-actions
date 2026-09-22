@@ -1,0 +1,5 @@
+name: Learning GitHub Actions
+
+on: push
+
+jobs:

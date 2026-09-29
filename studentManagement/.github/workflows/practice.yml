@@ -1,0 +1,33 @@
+name: Student Management CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Validate JavaScript syntax
+        run: node --check script.js
+
+      - name: Lint HTML files
+        run: npm run lint:html
+
+      - name: Lint CSS files
+        run: npm run lint:css

@@ -30,6 +30,11 @@ a {
   text-decoration: none;
 }
 
+.panel a {
+  color: var(--cyan);
+  border-bottom: 1px solid rgb(110 231 255 / 40%);
+}
+
 /* animated background */
 .aurora {
   position: fixed;
@@ -45,7 +50,7 @@ a {
   height: 45vmax;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 60%;
+  opacity: 0.6;
   animation: drift 18s ease-in-out infinite alternate;
 }
 
@@ -313,11 +318,6 @@ a {
   color: var(--muted);
   font-size: 1.1rem;
   line-height: 1.7;
-}
-
-.panel a {
-  color: var(--cyan);
-  border-bottom: 1px solid rgb(110 231 255 / 40%);
 }
 
 .reveal {

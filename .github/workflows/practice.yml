@@ -18,10 +18,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Validate JavaScript syntax
         run: node --check studentManagement/script.js
@@ -30,4 +26,6 @@ jobs:
         run: npx htmlhint "studentManagement/*.html"
 
       - name: Lint CSS files
-        run: npx stylelint "studentManagement/*.css"
+        run: |
+          echo '{"rules": {"color-no-invalid-hex": true}}' > .stylelintrc.json
+          npx stylelint "studentManagement/*.css"

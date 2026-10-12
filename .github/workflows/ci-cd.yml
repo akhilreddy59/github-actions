@@ -16,7 +16,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Job 1: Test on all pushes and PRs
   lint-and-validate:
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +30,6 @@ jobs:
       - name: Validate HTML
         run: npx html-validate studentManagement/index.html
 
-  # Job 2: Deploy ONLY when pushing/merging to main AND after lint-and-validate passes
   deploy:
     needs: lint-and-validate
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'

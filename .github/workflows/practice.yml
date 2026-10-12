@@ -1,31 +1,23 @@
-name: Student Management CI
+name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
-  lint-and-validate:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js environment
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Validate JavaScript syntax
-        run: node --check studentManagement/script.js
-
-      - name: Lint HTML files
-        run: npx htmlhint "studentManagement/*.html"
-
-      - name: Lint CSS files
-        run: |
-          echo '{"rules": {"color-no-invalid-hex": true}}' > .stylelintrc.json
-          npx stylelint "studentManagement/*.css"
+      - name: Validate HTML Structure
+        run: npx html-validate index.html

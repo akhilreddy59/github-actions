@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,10 +6,19 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:
-  lint-and-validate: # Matches the status check name required by main
-    runs-on: ubuntu-latest
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Job 1: Test on all pushes and PRs
+  lint-and-validate:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -21,3 +30,27 @@ jobs:
 
       - name: Validate HTML
         run: npx html-validate studentManagement/index.html
+
+  # Job 2: Deploy ONLY when pushing/merging to main AND after lint-and-validate passes
+  deploy:
+    needs: lint-and-validate
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './studentManagement'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

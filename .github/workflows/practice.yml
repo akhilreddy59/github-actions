@@ -20,4 +20,4 @@ jobs:
           node-version: '20'
 
       - name: Validate HTML
-        run: npx html-validate index.html
+        run: npx html-validate studentManagement/index.html

@@ -2,9 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # Only trigger on main branch pushes
 
-# Grant GitHub Actions permissions to deploy to GitHub Pages
 permissions:
   contents: read
   pages: write
